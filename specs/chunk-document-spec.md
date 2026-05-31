@@ -116,11 +116,11 @@ handle these cases better, at the cost of more implementation complexity.
 **Actual chunk count produced across all 8 rule books:**
 
 ```
-[your answer here]
+There are 149 chunks that are produced across all 8 rule books.
 ```
 
 **One thing that surprised you or didn't match your expectations:**
 
 ```
-[your answer here]
+Looking at the docs, it doesn't contain a whole lot of information (some games do but most have the general rules). For this reason, I thought there would be less chunks but I guess I overestimated the size of 300 character chunks and didn't take the overlap into consideration, which also adds to the number of chunks there are.
 ```
