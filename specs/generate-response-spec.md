@@ -42,7 +42,7 @@ Returns a fallback string (not an error) when `retrieved_chunks` is empty.
 *How will you format the retrieved chunks before passing them to the LLM? Describe the structure — not the code. Consider: will you label chunks by game? Include distance scores? Separate chunks with delimiters?*
 
 ```
-[your answer here]
+I will only include the game + text. "Game: {game}\n\nContext:{context}"
 ```
 
 ---
@@ -52,7 +52,7 @@ Returns a fallback string (not an error) when `retrieved_chunks` is empty.
 *Write the exact system prompt instruction you will use to prevent the model from answering beyond the retrieved text. This is the most important design decision in this function.*
 
 ```
-[your answer here]
+"You are a RulesBot that answers questions on rules of specific games using information from the actual rulesbooks of each game. You must answer any questions only based on the added context from these documents. Do not use any outside knowledge or training data. If you cannot form an answer based on the context, then just say you cannot answer the question based on the information available."
 ```
 
 ---
@@ -62,7 +62,7 @@ Returns a fallback string (not an error) when `retrieved_chunks` is empty.
 *Write the exact instruction you will use to tell the model to identify which game its answer comes from.*
 
 ```
-[your answer here]
+"Always cite which game your answer comes from."
 ```
 
 ---
@@ -72,7 +72,7 @@ Returns a fallback string (not an error) when `retrieved_chunks` is empty.
 *What should the response say when the answer isn't found in the loaded rule books? Write the exact fallback message.*
 
 ```
-[your answer here]
+Something like "I cannot answer the questin based on the information available. {reasons why}"
 ```
 
 ---
@@ -82,7 +82,7 @@ Returns a fallback string (not an error) when `retrieved_chunks` is empty.
 *`retrieved_chunks` may include chunks with high distance scores (weak relevance). Will you filter these out before building context, pass them all in, or handle them another way? What are the tradeoffs?*
 
 ```
-[your answer here]
+I will pass them in the chance they contain relevant information, even if it is a little bit. The bad part of it is that it may contain extra noise, where if I removed high distance scores, it may not add noise to the model.
 ```
 
 ---
@@ -92,7 +92,7 @@ Returns a fallback string (not an error) when `retrieved_chunks` is empty.
 *Describe how you will structure the messages list for the API call — what goes in the system message vs. the user message?*
 
 ```
-[your answer here]
+System prompt includes what the model should follow (guardrails) like don't extract from external knowledge, while the user message will include the actual context retrieved and the query.
 ```
 
 ---
@@ -104,14 +104,14 @@ Returns a fallback string (not an error) when `retrieved_chunks` is empty.
 **Test query and response:**
 
 ```
-Query: [your test query]
-Response: [abbreviated response]
-Correctly grounded? [yes / no]
-Cited the right game? [yes / no]
+Query: What happens if you roll a 7 in Catan?
+Response: "When a 7 is rolled in Catan, no resources are produced. Every player with more than 7 resource cards in hand must discard half (rounded down). The player who rolled moves the robber to any terrain hex and steals one resource from another player. ([Source: Catan])"
+Correctly grounded? Yes
+Cited the right game? Yes
 ```
 
 **One thing you changed from your original spec after seeing the actual output:**
 
 ```
-[your answer here]
+Only thing I changed is how the bot responds if the question doesn't relate to anything in the docs.
 ```
